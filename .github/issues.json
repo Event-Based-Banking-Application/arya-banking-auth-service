@@ -2,128 +2,7 @@
   {
     "service": "Auth Service",
     "issues": [
-      {
-        "task": "Register credentials (Step 2 - username/password)",
-        "description": "Implement an endpoint for users to set up username and password with validation and uniqueness checks.",
-        "labels": [
-          "auth",
-          "registration"
-        ]
-      },
-      {
-        "task": "Save hashed password",
-        "description": "Hash passwords using bcrypt or a secure algorithm before saving to DB.",
-        "labels": [
-          "auth",
-          "security"
-        ]
-      },
-      {
-        "task": "Set security questions & answers",
-        "description": "Allow users to setup security questions and answers for identity verification.",
-        "labels": [
-          "auth",
-          "security"
-        ]
-      },
-      {
-        "task": "Login endpoint",
-        "description": "Authenticate users with username and password, return JWT on success.",
-        "labels": [
-          "auth",
-          "login"
-        ]
-      },
-      {
-        "task": "Track failed login attempts",
-        "description": "Record and monitor failed login attempts for security and lockout policies.",
-        "labels": [
-          "auth",
-          "security"
-        ]
-      },
-      {
-        "task": "Lock account after 5 failed attempts",
-        "description": "Temporarily lock user accounts after repeated failed login attempts to prevent brute force.",
-        "labels": [
-          "auth",
-          "security"
-        ]
-      },
-      {
-        "task": "JWT generation via Keycloak",
-        "description": "Leverage Keycloak to issue and validate JWT tokens for authenticated sessions.",
-        "labels": [
-          "auth",
-          "security",
-          "keycloak"
-        ]
-      },
-      {
-        "task": "Logout endpoint",
-        "description": "End user sessions by invalidating tokens or clearing sessions.",
-        "labels": [
-          "auth",
-          "logout"
-        ]
-      },
-      {
-        "task": "Password reset (via token/email)",
-        "description": "Allow users to reset their password via a secure token sent by email.",
-        "labels": [
-          "auth",
-          "security",
-          "reset"
-        ]
-      },
-      {
-        "task": "Change password",
-        "description": "Secure route for users to change their password with current credentials validation.",
-        "labels": [
-          "auth",
-          "security"
-        ]
-      },
-      {
-        "task": "Setup Realm",
-        "description": "Configure Keycloak Realm with roles.",
-        "labels": [
-          "security",
-          "keycloak"
-        ]
-      },
-      {
-        "task": "Create client for Gateway",
-        "description": "Setup Keycloak client for API Gateway.",
-        "labels": [
-          "security",
-          "keycloak"
-        ]
-      },
-      {
-        "task": "Token lifespan configuration",
-        "description": "Adjust token expiry settings.",
-        "labels": [
-          "security",
-          "keycloak"
-        ]
-      },
-      {
-        "task": "Map roles to APIs",
-        "description": "Map Keycloak roles to microservice API access.",
-        "labels": [
-          "security",
-          "keycloak"
-        ]
-      },
-      {
-        "task": "Add users via backend or console",
-        "description": "Add admin users through Keycloak console.",
-        "labels": [
-          "security",
-          "keycloak"
-        ]
-      },{
+     {
         "task": "Base exception handling",
         "description": "Implement global exception handlers across services.",
         "labels": [
@@ -193,10 +72,112 @@
           "cross-cutting",
           "ci/cd"
         ]
+      }.
+      {
+        "task": "Implement configurable password hashing iterations (bcrypt cost factor)",
+        "description": "Enhance 'Save hashed password' task to use configurable bcrypt cost factor (start with 12). Store iteration count in UserCredentials for future security upgrades.",
+        "labels": ["auth", "security", "password", "hashing"]
+      },
+      {
+        "task": "Store password hash metadata in UserCredentials",
+        "description": "Extend UserCredentials model to include hashIterations, credentialVersion, lastPasswordChange, and algorithm info for security evolution tracking.",
+        "labels": ["auth", "security", "metadata", "versioning"]
+      },
+      {
+        "task": "Implement comprehensive session management storage",
+        "description": "Beyond JWT, store active sessions in SecurityDetails with sessionId, creationTime, lastActivity, ipAddress, userAgent for session tracking and concurrent session limits.",
+        "labels": ["auth", "session", "management", "tracking"]
+      },
+      {
+        "task": "Enhanced account lockout with automatic unlock",
+        "description": "Extend 'Lock account after 5 failed attempts' to include accountLockedUntil timestamp in SecurityDetails with automatic unlock after 30 minutes.",
+        "labels": ["auth", "security", "lockout", "automatic-unlock"]
+      },
+      {
+        "task": "Add password expiry and history enforcement",
+        "description": "Implement 90-day password expiry for banking compliance. Store previous 5 password hashes in UserCredentials to prevent reuse.",
+        "labels": ["auth", "security", "password", "expiry", "history"]
+      },
+      {
+        "task": "Password complexity and strength validation",
+        "description": "Enhance registration and password change with minimum 8 characters, mixed case, numbers, special characters. Ban common passwords list.",
+        "labels": ["auth", "security", "validation", "complexity"]
+      },
+      {
+        "task": "Implement credential version migration system", 
+        "description": "Create service to detect outdated credential versions and force password updates when security policies change.",
+        "labels": ["auth", "security", "migration", "upgrade"]
+      },
+      {
+        "task": "Session timeout and cleanup mechanism",
+        "description": "Implement automatic session expiry (30 minutes idle, 8 hours absolute) with background cleanup job for expired sessions beyond JWT expiry.",
+        "labels": ["auth", "session", "timeout", "cleanup"]
+      },
+      {
+        "task": "Multi-device session management",
+        "description": "Track and manage sessions across multiple devices, allow users to view active sessions and terminate specific sessions remotely.",
+        "labels": ["auth", "session", "multi-device", "management"]
+      },
+      {
+        "task": "Security event logging and alerting",
+        "description": "Enhance failed login tracking with comprehensive logging of security events, suspicious activities, password changes using your generic audit service.",
+        "labels": ["auth", "security", "logging", "alerts"]
+      },
+      {
+        "task": "Enhanced password reset workflow with temporary credentials",
+        "description": "Extend 'Password reset' to include temporary passwords that expire in 24 hours and force immediate change on first login.",
+        "labels": ["auth", "security", "password-reset", "temporary"]
+      },
+      {
+        "task": "Implement password policy configuration",
+        "description": "Create externalized configuration for password rules, lockout parameters, session timeouts to allow policy updates without code changes.",
+        "labels": ["auth", "security", "configuration", "policy"]
+      },
+      {
+        "task": "Add concurrent login prevention",
+        "description": "Prevent multiple simultaneous logins from different locations/devices based on banking security requirements (configurable).",
+        "labels": ["auth", "security", "concurrent-login", "prevention"]
+      },
+      {
+        "task": "Implement security question validation during critical operations",
+        "description": "Extend 'Set security questions' to require security question verification for sensitive operations like password changes, even when logged in.",
+        "labels": ["auth", "security", "security-questions", "verification"]
+      },
+      {
+        "task": "Add IP-based login monitoring and geo-location tracking",
+        "description": "Track login patterns by IP address and location, flag suspicious login attempts from new locations for additional verification.",
+        "labels": ["auth", "security", "ip-tracking", "geo-location"]
+      },
+      {
+        "task": "Implement login attempt rate limiting",
+        "description": "Add rate limiting to login endpoints (5 attempts per 15 minutes per IP) to prevent brute force attacks beyond account lockout.",
+        "labels": ["auth", "security", "rate-limiting", "brute-force"]
+      },
+      {
+        "task": "Create enhanced authentication response with session details",
+        "description": "Extend JWT response to include session information, expiry times, security status, and last login details for frontend session management.",
+        "labels": ["auth", "session", "response", "details"]
+      },
+      {
+        "task": "Implement comprehensive logout and session invalidation",
+        "description": "Enhance 'Logout endpoint' to invalidate both JWT and stored sessions, clear security context, and log logout events comprehensively.",
+        "labels": ["auth", "logout", "session-invalidation", "comprehensive"]
+      },
+      {
+        "task": "Integrate Keycloak with custom security policies",
+        "description": "Bridge custom password policies, account lockout, and session management with Keycloak realm configuration for unified security enforcement.",
+        "labels": ["auth", "security", "keycloak", "integration"]
+      },
+      {
+        "task": "Implement security dashboard data endpoints",
+        "description": "Provide endpoints for security dashboard showing failed login attempts, locked accounts, active sessions, and security metrics.",
+        "labels": ["auth", "security", "dashboard", "metrics"]
       }
+    ]
     }
 ]
      
+
 
 
 
