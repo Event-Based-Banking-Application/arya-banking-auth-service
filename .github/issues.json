@@ -83,7 +83,127 @@
           "auth",
           "security"
         ]
+      },
+      {
+        "task": "Setup Realm",
+        "description": "Configure Keycloak Realm with roles.",
+        "labels": [
+          "security",
+          "keycloak"
+        ]
+      },
+      {
+        "task": "Create client for Gateway",
+        "description": "Setup Keycloak client for API Gateway.",
+        "labels": [
+          "security",
+          "keycloak"
+        ]
+      },
+      {
+        "task": "Token lifespan configuration",
+        "description": "Adjust token expiry settings.",
+        "labels": [
+          "security",
+          "keycloak"
+        ]
+      },
+      {
+        "task": "Map roles to APIs",
+        "description": "Map Keycloak roles to microservice API access.",
+        "labels": [
+          "security",
+          "keycloak"
+        ]
+      },
+      {
+        "task": "Add users via backend or console",
+        "description": "Add admin users through Keycloak console.",
+        "labels": [
+          "security",
+          "keycloak"
+        ]
+      },
+      [
+  {
+    "service": "Cross-Cutting Tasks",
+    "issues": [
+      {
+        "task": "Base exception handling",
+        "description": "Implement global exception handlers across services.",
+        "labels": [
+          "cross-cutting",
+          "exception"
+        ]
+      },
+      {
+        "task": "Request validation",
+        "description": "Validate incoming API requests consistently.",
+        "labels": [
+          "cross-cutting",
+          "validation"
+        ]
+      },
+      {
+        "task": "Swagger/OpenAPI docs",
+        "description": "Generate and maintain API documentation.",
+        "labels": [
+          "cross-cutting",
+          "documentation"
+        ]
+      },
+      {
+        "task": "Global logging setup",
+        "description": "Set up logging framework and correlation IDs.",
+        "labels": [
+          "cross-cutting",
+          "logging"
+        ]
+      },
+      {
+        "task": "Kafka base config",
+        "description": "Standardize Kafka configuration for all event-driven services.",
+        "labels": [
+          "cross-cutting",
+          "kafka"
+        ]
+      },
+      {
+        "task": "MongoDB base repo",
+        "description": "Create a common repository layer for MongoDB access.",
+        "labels": [
+          "cross-cutting",
+          "database"
+        ]
+      },
+      {
+        "task": "Common entity annotations",
+        "description": "Define shared entity annotations like timestamps and soft deletes.",
+        "labels": [
+          "cross-cutting"
+        ]
+      },
+      {
+        "task": "Correlation ID in logs",
+        "description": "Implement correlation IDs in logs for tracing.",
+        "labels": [
+          "cross-cutting",
+          "logging"
+        ]
+      },
+      {
+        "task": "GitHub Actions CI/CD",
+        "description": "Implement CI/CD pipelines for all services.",
+        "labels": [
+          "cross-cutting",
+          "ci/cd"
+        ]
       }
     ]
   }
 ]
+
+    ]
+  }
+]
+
