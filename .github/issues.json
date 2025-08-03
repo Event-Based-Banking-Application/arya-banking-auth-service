@@ -123,12 +123,7 @@
           "security",
           "keycloak"
         ]
-      },
-      [
-  {
-    "service": "Cross-Cutting Tasks",
-    "issues": [
-      {
+      },{
         "task": "Base exception handling",
         "description": "Implement global exception handlers across services.",
         "labels": [
@@ -199,9 +194,9 @@
           "ci/cd"
         ]
       }
-    ]
-  }
+    }
 ]
+     
 
 
 
