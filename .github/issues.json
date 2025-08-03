@@ -72,7 +72,7 @@
           "cross-cutting",
           "ci/cd"
         ]
-      }.
+      },
       {
         "task": "Implement configurable password hashing iterations (bcrypt cost factor)",
         "description": "Enhance 'Save hashed password' task to use configurable bcrypt cost factor (start with 12). Store iteration count in UserCredentials for future security upgrades.",
@@ -177,6 +177,7 @@
     }
 ]
      
+
 
 
 
