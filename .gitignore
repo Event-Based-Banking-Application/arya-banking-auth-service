@@ -7,6 +7,8 @@ mvnw.cmd
 .mvn
 add-secrets.sh
 .gitattributes
+keycloak-data
+postgres-data
 
 ### STS ###
 .apt_generated

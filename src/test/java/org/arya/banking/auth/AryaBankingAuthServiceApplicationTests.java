@@ -1,9 +1,9 @@
-package org.arya.banking;
+package org.arya.banking.auth;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AryaBankingTemplateApplicationTests {
+class AryaBankingAuthServiceApplicationTests {
 
     void contextLoads() {
     }
