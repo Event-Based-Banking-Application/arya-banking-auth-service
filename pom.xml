@@ -9,11 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.arya.banking</groupId>
-    <artifactId>arya-banking-template</artifactId>
+    <artifactId>arya-banking-auth-service</artifactId>
     <version>1.0.0</version>
-    <name>arya-banking-template</name>
-    <description>arya-banking-template</description>
-    <url>https://github.com/Event-Based-Banking-Application/arya-banking-common</url>
+    <name>arya-banking-auth-service</name>
+    <description>arya-banking-auth-service</description>
+    <url>https://github.com/Event-Based-Banking-Application/arya-banking-auth-service</url>
 
     <licenses>
         <license>
@@ -42,6 +42,7 @@
 
     <properties>
         <java.version>17</java.version>
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
     </properties>
 
     <repositories>
@@ -52,7 +53,23 @@
         </repository>
     </repositories>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -108,13 +125,20 @@
         <dependency>
             <groupId>org.arya.banking</groupId>
             <artifactId>arya-banking-common</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>1.5.5.Final</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.keycloak/keycloak-admin-client -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-admin-client</artifactId>
+            <version>26.0.4</version>
         </dependency>
 
     </dependencies>
@@ -164,8 +188,27 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>1.5.5.Final</version>
                         </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.36</version>
+                        </path>
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.8.6.1</version>
+                <dependencies>
+                    <!-- Optional: specify SpotBugs version -->
+                    <dependency>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs</artifactId>
+                        <version>4.8.6</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
         </plugins>
