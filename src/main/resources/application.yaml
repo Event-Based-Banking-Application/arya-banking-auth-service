@@ -13,7 +13,8 @@ spring:
 app:
   config:
     keycloak:
-      server-url: http://localhost:5433/
+      url: http://localhost:5433/
       realm: event-based-banking-service
       client-id: arya-banking-auth-client
       client-secret: 8RkppzHa219hoCNWLAO1SA3DdpD3AU9D
+      token-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/token

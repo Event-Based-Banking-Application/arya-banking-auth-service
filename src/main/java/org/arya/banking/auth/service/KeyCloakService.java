@@ -10,6 +10,8 @@ public interface KeyCloakService {
 
     Response createKeyCloakUser(KeyCloakUser keyCloakUser);
 
+    String authenticateUser(String username, String password);
+
     List<UserRepresentation> findUserByEmailId(String emailId);
 
     List<UserRepresentation> findUserByUserId(String userId);
