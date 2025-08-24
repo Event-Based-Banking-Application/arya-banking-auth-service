@@ -1,0 +1,20 @@
+server:
+  port: 8087
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: arya-banking-auth-service
+
+app:
+  config:
+    keycloak:
+      url: http://localhost:5433/
+      realm: event-based-banking-service
+      client-id: arya-banking-auth-client
+      client-secret: 8RkppzHa219hoCNWLAO1SA3DdpD3AU9D
+      token-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/token
