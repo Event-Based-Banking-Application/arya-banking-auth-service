@@ -28,6 +28,13 @@ services:
       KC_HOSTNAME: localhost
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+
+      # 🔐 Argon2id tuning
+      KC_SPI_PASSWORD_HASHING_PROVIDER: argon2
+      KC_SPI_PASSWORD_HASHING_ARGON2_MEMORY: 65536     # 64 MB
+      KC_SPI_PASSWORD_HASHING_ARGON2_PARALLELISM: 2   # 2 threads
+      KC_SPI_PASSWORD_HASHING_ARGON2_ITERATIONS: 3    # iterations
+      KC_SPI_PASSWORD_HASHING_ARGON2_TYPE: id         # enforce Argon2id
     ports:
       - "5433:8080"
     depends_on:
