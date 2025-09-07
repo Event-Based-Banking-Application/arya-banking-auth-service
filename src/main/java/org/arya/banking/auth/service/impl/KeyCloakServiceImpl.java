@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.arya.banking.auth.service.KeyCloakManager;
 import org.arya.banking.auth.service.KeyCloakService;
+import org.arya.banking.common.dto.KeyCloakResponse;
+import org.arya.banking.common.exception.InternalServerExceptionHandler;
+import org.arya.banking.common.exception.KeyCloakServiceException;
 import org.arya.banking.common.model.KeyCloakUser;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -16,6 +19,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.List;
+
+import static org.arya.banking.common.exception.ExceptionCode.KEYCLOAK_INTERNAL_SERVER_CODE;
+import static org.arya.banking.common.exception.ExceptionCode.KEYCLOAK_USER_CREATION_CODE;
 
 @Slf4j
 @Service
@@ -32,9 +38,26 @@ public class KeyCloakServiceImpl implements KeyCloakService {
     private static final String ACCESS_TOKEN = "access_token";
 
     @Override
-    public Response createKeyCloakUser(KeyCloakUser keyCloakUser) {
+    public KeyCloakResponse createKeyCloakUser(KeyCloakUser keyCloakUser) {
 
         log.info("Processing KeyCloak User: {}", keyCloakUser);
+        UserRepresentation userRepresentation = getUserRepresentation(keyCloakUser);
+
+        log.info("Processing keycloak User Representation: {}", userRepresentation);
+
+        Response response;
+        try {
+            response = keyCloakManager.getKeyCloakInstanceWithRealm().users().create(userRepresentation);
+        } catch (Exception e) {
+            throw new KeyCloakServiceException(500, KEYCLOAK_INTERNAL_SERVER_CODE, e.getCause().getMessage());
+        }
+        if(response.getStatus() != 201 ) {
+            throw new KeyCloakServiceException(response.getStatus(), KEYCLOAK_USER_CREATION_CODE, "Error occurred while creating user in keycloak: "+response.readEntity(String.class));
+        }
+        return new KeyCloakResponse(String.valueOf(response.getStatus()), response.readEntity(String.class));
+    }
+
+    private static UserRepresentation getUserRepresentation(KeyCloakUser keyCloakUser) {
         UserRepresentation userRepresentation = new UserRepresentation();
         userRepresentation.setUsername(keyCloakUser.getUsername());
         userRepresentation.setFirstName(keyCloakUser.getFirstName());
@@ -48,10 +71,7 @@ public class KeyCloakServiceImpl implements KeyCloakService {
         credentialRepresentation.setValue(keyCloakUser.getPassword());
         credentialRepresentation.setTemporary(false);
         userRepresentation.setCredentials(List.of(credentialRepresentation));
-
-        log.info("Processing keycloak User Representation: {}", userRepresentation);
-
-        return keyCloakManager.getKeyCloakInstanceWithRealm().users().create(userRepresentation);
+        return userRepresentation;
     }
 
     @Override
