@@ -40,7 +40,7 @@ public class KeyCloakServiceImpl implements KeyCloakService {
     @Override
     public KeyCloakResponse createKeyCloakUser(KeyCloakUser keyCloakUser) {
 
-        log.info("Processing KeyCloak User: {}", keyCloakUser);
+        log.info("Processing KeyCloak User: {}", keyCloakUser.getUsername());
         UserRepresentation userRepresentation = getUserRepresentation(keyCloakUser);
 
         log.info("Processing keycloak User Representation: {}", userRepresentation);
@@ -93,9 +93,6 @@ public class KeyCloakServiceImpl implements KeyCloakService {
 
         ResponseEntity<HashMap> response = restTemplate.exchange(keyCloakManager.getTokenUrl(),
                 HttpMethod.POST, requestEntity, HashMap.class);
-
-        log.info("Response from token endpoint: {}", response.getBody());
-
         return response.getBody().get(ACCESS_TOKEN).toString();
     }
 

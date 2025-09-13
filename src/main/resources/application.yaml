@@ -9,6 +9,11 @@ eureka:
 spring:
   application:
     name: arya-banking-auth-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
 
 app:
   config:
