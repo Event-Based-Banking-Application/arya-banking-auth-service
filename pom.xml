@@ -125,7 +125,7 @@
         <dependency>
             <groupId>org.arya.banking</groupId>
             <artifactId>arya-banking-common</artifactId>
-            <version>1.1.4</version>
+            <version>1.1.5</version>
         </dependency>
 
         <dependency>
@@ -146,6 +146,18 @@
             <artifactId>lombok</artifactId>
             <version>1.18.36</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- OAuth2 client for login support -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+
+        <!-- OAuth2 resource server for JWT validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
 
     </dependencies>
