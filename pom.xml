@@ -125,7 +125,7 @@
         <dependency>
             <groupId>org.arya.banking</groupId>
             <artifactId>arya-banking-common</artifactId>
-            <version>1.1.5</version>
+            <version>1.1.6</version>
         </dependency>
 
         <dependency>

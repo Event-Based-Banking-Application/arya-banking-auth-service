@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.arya.banking.auth.service.KeyCloakManager;
 import org.arya.banking.auth.service.KeyCloakService;
 import org.arya.banking.common.dto.KeyCloakResponse;
-import org.arya.banking.common.exception.InternalServerExceptionHandler;
 import org.arya.banking.common.exception.KeyCloakServiceException;
 import org.arya.banking.common.model.KeyCloakUser;
 import org.keycloak.representations.idm.CredentialRepresentation;
@@ -42,8 +41,6 @@ public class KeyCloakServiceImpl implements KeyCloakService {
 
         log.info("Processing KeyCloak User: {}", keyCloakUser.getUsername());
         UserRepresentation userRepresentation = getUserRepresentation(keyCloakUser);
-
-        log.info("Processing keycloak User Representation: {}", userRepresentation);
 
         Response response;
         try {
