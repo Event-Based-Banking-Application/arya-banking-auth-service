@@ -28,6 +28,7 @@ import static org.arya.banking.common.exception.ExceptionCode.KEYCLOAK_USER_CREA
 public class KeyCloakServiceImpl implements KeyCloakService {
 
     private final KeyCloakManager keyCloakManager;
+    private final RestTemplate restTemplate;
 
     private static final String CLIENT_ID = "client_id";
     private static final String CLIENT_SECRET = "client_secret";
@@ -85,8 +86,6 @@ public class KeyCloakServiceImpl implements KeyCloakService {
         formData.add(PASSWORD, password);
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, httpHeaders);
-
-        RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<HashMap> response = restTemplate.exchange(keyCloakManager.getTokenUrl(),
                 HttpMethod.POST, requestEntity, HashMap.class);
