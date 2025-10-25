@@ -11,11 +11,23 @@ spring:
     name: arya-banking-auth-service
   security:
     oauth2:
+      client:
+        provider:
+          keycloak:
+            token-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/token
+        registration:
+          auth-service-client:
+            provider: keycloak
+            client-id: auth-service-client
+            client-secret: 0oaVZjEt4yZ5lPHzJrzF6pHvdFKC4m2a
+            authorization-grant-type: client_credentials
       resourceserver:
         jwt:
           jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
 
 app:
+  security:
+    client-registrationId: auth-service-client
   config:
     keycloak:
       url: http://localhost:5433/

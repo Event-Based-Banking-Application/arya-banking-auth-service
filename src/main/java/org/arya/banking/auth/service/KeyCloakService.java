@@ -12,7 +12,7 @@ public interface KeyCloakService {
 
     String authenticateUser(String username, String password);
 
-    List<UserRepresentation> findUserByEmailId(String emailId);
+    UserRepresentation findUserByUsername(String username);
 
     List<UserRepresentation> findUserByUserId(String userId);
 }
