@@ -109,14 +109,14 @@ public class KeyCloakServiceImpl implements KeyCloakService {
                 throw new KeyCloakServiceException(FORBIDDEN_ERROR_CODE, ACCOUNT_LOCKED_403, "Account is locked. Please contact administrator.");
             }
         }
-        log.info("Keycloak response: {}", response);
         return response.getBody().get(ACCESS_TOKEN).toString();
     }
 
     private void updateLoginFailedAttempts(String username) {
         log.info("Send failed login attempt for user: {}", username);
         ResponseEntity<Map<String, String>> response = userService.updateLoginAttempts(username.toUpperCase(), true);
-        if(isNotEmpty(response) && response.getStatusCode().value() == 200) {
+        if(isNotEmpty(response) && response.getStatusCode().value() == 200
+                && null != response.getBody() && "true".equals(response.getBody().get("disableUser"))) {
             log.info("Successfully updated failed login attempts for user: {} with response: {}", username, response);
             updateUserRepresentation(username, response.getBody());
         } else {
