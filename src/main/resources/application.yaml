@@ -31,4 +31,4 @@ app:
   config:
     keycloak:
       client-id: arya-banking-auth-client
-      client-secret: 8RkppzHa219hoCNWLAO1SA3DdpD3AU9D
+      client-secret: ${ARYA.BANKING.AUTH.CLIENT.SECRET}
