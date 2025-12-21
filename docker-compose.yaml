@@ -3,6 +3,8 @@ version: '1.0'
 networks:
   arya-banking-keycloak:
     driver: bridge
+  arya-banking-config:
+      driver: bridge
 
 services:
   postgres:
@@ -49,3 +51,24 @@ services:
       - ./keycloak-data:/opt/keycloak/data
     networks:
       - arya-banking-keycloak
+
+  service-registry:
+    image: karthikulkarni/arya-banking-service-registry:latest
+    ports:
+      - "8761:8761"
+    restart: unless-stopped
+    networks:
+      - arya-banking-config
+
+  config-server:
+    image: karthikulkarni/arya-banking-config-server
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
+    depends_on:
+      - service-registry
+    restart: unless-stopped
+    networks:
+      - arya-banking-config
