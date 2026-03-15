@@ -17,8 +17,8 @@ spring:
       authentication: APPROLE
 
       app-role:
-        role-id: 34118030-fff1-694b-b755-34d89f17128f
-        secret-id: f098a86b-7fec-2524-d80f-03603c7e93f5
+        role-id: 740524ed-edd1-d034-b89c-bae47f072eaa
+        secret-id: 9853456a-b211-f565-9539-335b10fffe0b
 
       kv:
         enabled: true

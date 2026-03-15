@@ -19,7 +19,7 @@ spring:
           auth-service-client:
             provider: keycloak
             client-id: auth-service-client
-            client-secret: h5pfzplg1w4tSpczyXx7BT6qoXjhHgc5
+            client-secret: ${AUTH.SERVICE.CLIENT.SECRET}
             authorization-grant-type: client_credentials
       resourceserver:
         jwt:
