@@ -6,7 +6,7 @@ spring:
     active: dev
 
   config:
-    import: vault://
+    import: "optional:file:./vault-credentials.yml"
 
   cloud:
     config:
@@ -16,13 +16,10 @@ spring:
       uri: http://localhost:8091
       authentication: APPROLE
 
-      app-role:
-        role-id: 740524ed-edd1-d034-b89c-bae47f072eaa
-        secret-id: 9853456a-b211-f565-9539-335b10fffe0b
-
       kv:
         enabled: true
         backend: secret
+        kv-version: 2
         default-context: ""
         application-name: arya-banking/auth-service
         profile-separator: /
