@@ -23,6 +23,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request ->
                         request.requestMatchers( "/api/auth/authenticate").permitAll()
                                 .requestMatchers("/internal/**").hasAnyAuthority("ROLE_INTERNAL_SERVICE")
+                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/webjars/**").permitAll()
                                 .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(
                         jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));

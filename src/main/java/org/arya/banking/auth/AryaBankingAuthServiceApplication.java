@@ -1,7 +1,6 @@
 package org.arya.banking.auth;
 
 import org.arya.banking.auth.config.OAuth2FeignConfig;
-import org.arya.banking.common.config.KafkaConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
