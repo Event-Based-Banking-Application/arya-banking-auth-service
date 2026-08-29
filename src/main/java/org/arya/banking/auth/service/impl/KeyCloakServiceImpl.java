@@ -4,12 +4,16 @@ import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.arya.banking.auth.external.UserService;
+import org.arya.banking.auth.kafka.UserEventProducer;
 import org.arya.banking.auth.service.KeyCloakManager;
 import org.arya.banking.auth.service.KeyCloakService;
+import org.arya.banking.common.avro.LoginFailedEvent;
+import org.arya.banking.common.avro.UserCreateEvent;
 import org.arya.banking.common.dto.KeyCloakResponse;
 import org.arya.banking.common.exception.ExceptionCode;
 import org.arya.banking.common.exception.KeyCloakServiceException;
 import org.arya.banking.common.model.KeyCloakUser;
+import org.arya.banking.common.utils.EventMetadataFactory;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -22,9 +26,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static org.arya.banking.common.constants.ResponseKeys.DISABLE_USER;
 import static org.arya.banking.common.exception.ExceptionCode.*;
 import static org.arya.banking.common.exception.ExceptionConstants.*;
 import static org.arya.banking.common.utils.CommonUtils.isNotEmpty;
@@ -41,6 +43,7 @@ public class KeyCloakServiceImpl implements KeyCloakService {
     private final UserService userService;
     private final RestTemplate restTemplate;
     private final UsersResource usersResource;
+    private final UserEventProducer userEventProducer;
 
     private static final String CLIENT_ID = "client_id";
     private static final String CLIENT_SECRET = "client_secret";
@@ -94,7 +97,7 @@ public class KeyCloakServiceImpl implements KeyCloakService {
         formData.add(CLIENT_ID, keyCloakManager.getClientId());
         formData.add(CLIENT_SECRET, keyCloakManager.getClientSecret());
         formData.add(GRANT_TYPE, PASSWORD);
-        formData.add(USERNAME, username);
+        formData.add(USERNAME, username.toLowerCase());
         formData.add(PASSWORD, password);
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, httpHeaders);
@@ -114,14 +117,11 @@ public class KeyCloakServiceImpl implements KeyCloakService {
 
     private void updateLoginFailedAttempts(String username) {
         log.info("Send failed login attempt for user: {}", username);
-        ResponseEntity<Map<String, String>> response = userService.updateLoginAttempts(username.toUpperCase(), true);
-        if(isNotEmpty(response) && response.getStatusCode().value() == 200
-                && null != response.getBody() && "true".equals(response.getBody().get("disableUser"))) {
-            log.info("Successfully updated failed login attempts for user: {} with response: {}", username, response);
-            updateUserRepresentation(username, response.getBody());
-        } else {
-            log.error("Error occurred while updating failed login attempts for user: {}", username);
-        }
+        LoginFailedEvent loginFailedEvent = LoginFailedEvent.newBuilder()
+                .setMetadata(EventMetadataFactory.newEventMetadata())
+                .setUserId(username)
+                .setIsLockUser(true).build();
+        userEventProducer.sendLoginFailedEvent(loginFailedEvent);
     }
 
     @Override
@@ -139,13 +139,12 @@ public class KeyCloakServiceImpl implements KeyCloakService {
         return List.of();
     }
 
-    private void updateUserRepresentation(String userId, Map<String, String> response) {
-        UserRepresentation userRepresentation = findUserByUsername(userId);
-        String lockedStatus = response.get(DISABLE_USER);
-        if (isNotEmpty(lockedStatus)) {
-            userRepresentation.setEnabled(!Boolean.parseBoolean(lockedStatus));
-        }
-        log.info("Updating user representation for userId: {} with locked status: {}", userRepresentation.isEnabled(), lockedStatus);
+    @Override
+    public void onUserUpdateEvent(UserCreateEvent userCreateEvent) {
+        UserRepresentation userRepresentation = findUserByUsername(userCreateEvent.getUserId().toString());
+        userRepresentation.setEnabled(
+                !"BLOCKED".equals(userCreateEvent.getStatus().toString())
+        );
         usersResource.get(userRepresentation.getId()).update(userRepresentation);
     }
 }

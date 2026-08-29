@@ -9,6 +9,11 @@ spring:
   config:
     import: configserver:http://localhost:8090
 
+  kafka:
+    bootstrap-servers: localhost:9092   # kafka:29092 in Docker
+    properties:
+      schema.registry.url: http://localhost:8081
+
   security:
     oauth2:
       client:

@@ -1,5 +1,6 @@
 package org.arya.banking.auth.service;
 
+import org.arya.banking.common.avro.UserCreateEvent;
 import org.arya.banking.common.dto.KeyCloakResponse;
 import org.arya.banking.common.model.KeyCloakUser;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -15,4 +16,6 @@ public interface KeyCloakService {
     UserRepresentation findUserByUsername(String username);
 
     List<UserRepresentation> findUserByUserId(String userId);
+
+    void onUserUpdateEvent(UserCreateEvent userCreateEvent);
 }
