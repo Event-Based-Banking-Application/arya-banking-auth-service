@@ -1,15 +1,14 @@
-name: Build and Deploy
+name: Build
 
 on:
   push:
     branches: [master]
+  pull_request:
+    branches: [master]
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,7 +18,7 @@ jobs:
       - name: Set up Java 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
 
       - name: Cache Maven packages
@@ -30,12 +29,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven
 
-      - name: Build and Test
-        run: mvn --settings settings.xml clean verify -DskipTests
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-
-      - name: Build Docker Image
-        run: mvn --settings settings.xml spring-boot:build-image -DskipTests
+      - name: Build
+        run: mvn --settings settings.xml clean compile -DskipTests
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
