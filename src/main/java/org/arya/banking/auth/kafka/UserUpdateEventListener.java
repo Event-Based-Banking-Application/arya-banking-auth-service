@@ -5,11 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.arya.banking.auth.service.KeyCloakService;
 import org.arya.banking.common.avro.OutboxKafkaEvent;
 import org.arya.banking.common.avro.UserCreateEvent;
-import org.arya.banking.common.utils.GsonParser;
+import org.arya.banking.common.core.utils.GsonParser;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import static org.arya.banking.common.constants.kafka.KafkaConstants.USER_UPDATE_TOPIC;
+import static org.arya.banking.common.kafka.constants.KafkaConstants.USER_UPDATE_TOPIC;
 
 @Slf4j
 @Component

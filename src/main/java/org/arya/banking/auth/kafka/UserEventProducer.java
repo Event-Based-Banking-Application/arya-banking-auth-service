@@ -6,7 +6,7 @@ import org.arya.banking.common.avro.LoginFailedEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import static org.arya.banking.common.constants.kafka.KafkaConstants.AUTH_FAILED_TOPIC;
+import static org.arya.banking.common.kafka.constants.KafkaConstants.AUTH_FAILED_TOPIC;
 
 @Slf4j
 @Component

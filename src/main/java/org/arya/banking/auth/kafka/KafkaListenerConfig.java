@@ -1,7 +1,7 @@
 package org.arya.banking.auth.kafka;
 
 import org.apache.avro.specific.SpecificRecord;
-import org.arya.banking.common.config.KafkaConfiguration;
+import org.arya.banking.common.kafka.config.KafkaConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;

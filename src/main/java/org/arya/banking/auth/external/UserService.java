@@ -1,7 +1,7 @@
 package org.arya.banking.auth.external;
 
-import org.arya.banking.common.config.FeignConfiguration;
-import org.arya.banking.common.dto.UserResponse;
+import org.arya.banking.common.feign.config.FeignConfiguration;
+import org.arya.banking.common.core.dto.UserResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

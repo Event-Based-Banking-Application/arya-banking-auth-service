@@ -7,8 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.arya.banking.auth.service.KeyCloakService;
-import org.arya.banking.common.dto.KeyCloakResponse;
-import org.arya.banking.common.model.KeyCloakUser;
+import org.arya.banking.common.core.dto.KeyCloakResponse;
+import org.arya.banking.common.core.model.KeyCloakUser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

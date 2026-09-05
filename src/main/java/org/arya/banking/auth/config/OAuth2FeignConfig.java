@@ -2,8 +2,8 @@ package org.arya.banking.auth.config;
 
 import feign.RequestInterceptor;
 import lombok.RequiredArgsConstructor;
-import org.arya.banking.common.exception.ExceptionCode;
-import org.arya.banking.common.exception.InvalidOAuth2Client;
+import org.arya.banking.common.core.exception.ExceptionCode;
+import org.arya.banking.common.core.exception.InvalidOAuth2Client;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +12,8 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 
-import static org.arya.banking.common.exception.ExceptionCode.AUTH_INVALID_OAUTH_TOKEN_400;
-import static org.arya.banking.common.utils.CommonUtils.isEmpty;
+import static org.arya.banking.common.core.exception.ExceptionCode.AUTH_INVALID_OAUTH_TOKEN_400;
+import static org.arya.banking.common.core.utils.CommonUtils.isEmpty;
 
 @Configuration
 @RequiredArgsConstructor

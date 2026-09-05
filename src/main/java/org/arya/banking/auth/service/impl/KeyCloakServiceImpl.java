@@ -9,11 +9,11 @@ import org.arya.banking.auth.service.KeyCloakManager;
 import org.arya.banking.auth.service.KeyCloakService;
 import org.arya.banking.common.avro.LoginFailedEvent;
 import org.arya.banking.common.avro.UserCreateEvent;
-import org.arya.banking.common.dto.KeyCloakResponse;
-import org.arya.banking.common.exception.ExceptionCode;
-import org.arya.banking.common.exception.KeyCloakServiceException;
-import org.arya.banking.common.model.KeyCloakUser;
-import org.arya.banking.common.utils.EventMetadataFactory;
+import org.arya.banking.common.core.dto.KeyCloakResponse;
+import org.arya.banking.common.core.exception.ExceptionCode;
+import org.arya.banking.common.core.exception.KeyCloakServiceException;
+import org.arya.banking.common.core.model.KeyCloakUser;
+import org.arya.banking.common.kafka.utils.EventMetadataFactory;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -27,9 +27,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.arya.banking.common.exception.ExceptionCode.*;
-import static org.arya.banking.common.exception.ExceptionConstants.*;
-import static org.arya.banking.common.utils.CommonUtils.isNotEmpty;
+import static org.arya.banking.common.core.exception.ExceptionCode.*;
+import static org.arya.banking.common.core.exception.ExceptionConstants.*;
+import static org.arya.banking.common.core.utils.CommonUtils.isNotEmpty;
 
 @Slf4j
 @Service

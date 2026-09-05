@@ -1,8 +1,8 @@
 package org.arya.banking.auth.service;
 
 import org.arya.banking.common.avro.UserCreateEvent;
-import org.arya.banking.common.dto.KeyCloakResponse;
-import org.arya.banking.common.model.KeyCloakUser;
+import org.arya.banking.common.core.dto.KeyCloakResponse;
+import org.arya.banking.common.core.model.KeyCloakUser;
 import org.keycloak.representations.idm.UserRepresentation;
 
 import java.util.List;
