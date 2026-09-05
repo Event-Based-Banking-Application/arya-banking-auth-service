@@ -33,3 +33,4 @@ jobs:
         run: mvn --settings settings.xml clean compile -DskipTests
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_ACTOR: ${{ github.actor }}
